@@ -27,3 +27,4 @@ jobs:
           gh release create ${GITHUB_REF_NAME}
           --title ${GITHUB_REF_NAME}
           --notes-file changelog/${GITHUB_REF_NAME}.md
+
