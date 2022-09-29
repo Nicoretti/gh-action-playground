@@ -1,0 +1,24 @@
+name: CD
+
+on:
+  push:
+    tags:
+      - '**'
+
+jobs:
+
+  github-release:
+    name: Create a github relase
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SCM Checkout
+        uses: actions/checkout@v2
+
+      - name: GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >
+          gh release create ${{ github.rev_name }}
+          --title ${{ github.rev_name }}
+          --notes-file changelog/${{ github.rev_name }}.md
