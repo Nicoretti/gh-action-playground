@@ -8,17 +8,23 @@ on:
 jobs:
 
   github-release:
-    name: Create a github relase
+    name: Create a github release
     runs-on: ubuntu-latest
 
     steps:
       - name: SCM Checkout
         uses: actions/checkout@v2
 
+      - name: Print Tag Name
+        run: |
+          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+          echo "Tag name from github.ref_name: ${{  github.ref_name }}" 
+
       - name: GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: >
-          gh release create ${{ github.rev_name }}
-          --title ${{ github.rev_name }}
-          --notes-file changelog/${{ github.rev_name }}.md
+          gh release create ${GITHUB_REF_NAME}
+          --title ${GITHUB_REF_NAME}
+          --notes-file changelog/${GITHUB_REF_NAME}.md
+
